@@ -35,6 +35,12 @@ def lower_case(data):
     return data
 
 
+def split_features(data):
+    for i in range(len(data)):
+        data.iloc[i] = data.iloc[i].split()
+    return data
+
+
 data = read_csv()
 
 train_data_generated, train_data_written, test_data_generated, test_data_written = train_test_split(data)
@@ -44,3 +50,11 @@ train_data_written = lower_case(train_data_written)
 
 test_data_generated = lower_case(test_data_generated)
 test_data_written = lower_case(test_data_written)
+
+train_data_generated = split_features(train_data_generated)
+train_data_written = split_features(train_data_written)
+
+test_data_generated = split_features(test_data_generated)
+test_data_written = split_features(test_data_written)
+
+print(test_data_generated[:1])
