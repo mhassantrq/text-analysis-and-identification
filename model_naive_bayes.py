@@ -1,5 +1,6 @@
 import read_data, preprocessing
 from collections import defaultdict
+import math
 
 def from_scratch(data):
     train_data_generated, train_data_written, test_data_generated, test_data_written = preprocessing.split_train_test(data)
@@ -21,22 +22,55 @@ def from_scratch(data):
     train_wri_bow = defaultdict(int)
     test_gen_bow = defaultdict(int)
     test_wri_bow = defaultdict(int)
-    cond_gen_bow = defaultdict(int)
-    cond_wri_bow = defaultdict(int)
+    cond_gen = defaultdict(int)
+    cond_wri = defaultdict(int)
+    tgc=twc=tp=fp=tn=fn=0
 
+    prior_gen = len(train_data_generated) / (len(train_data_generated) + len(train_data_written))
+    prior_wri = len(train_data_written) / (len(train_data_generated) + len(train_data_written))
 
     for doc in train_data_generated:
         for w in doc:
             vocab[w] +=1
             train_gen_bow[w] +=1
+            tgc+=1
 
     for doc in train_data_written:
         for w in doc:
             vocab[w] +=1
             train_wri_bow[w] +=1
+            twc+=1
 
-    
+    for w in vocab:
+        cond_gen[w] = ((train_gen_bow[w] + 1) / (tgc + len(vocab)))
+        cond_wri[w] = ((train_wri_bow[w] + 1) / (twc + len(vocab)))
+
+    for doc in test_data_generated:
+        for w in doc:
+            prob_gen = prior_gen
+            prob_wri = prior_wri
+            prob_gen += math.log(cond_gen[w])
+            prob_wri += math.log(cond_wri[w])
+        if prob_gen>=prob_wri:
+            tp+=1
+        else:
+            fn+=1
+
+    for doc in test_data_written:
+        for w in doc:
+            prob_gen = prior_gen
+            prob_wri = prior_wri
+            prob_gen += math.log(cond_gen[w])
+            prob_wri += math.log(cond_wri[w])
+        if prob_wri>=prob_gen:
+            tn+=1
+        else:
+            fp+=1
+
+    print(tp, fp, fn, tn)
 
 
 data = read_data.read_csv()
 from_scratch(data)
+
+# to remove puntuation pending
