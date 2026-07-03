@@ -20,8 +20,6 @@ def from_scratch(data):
     vocab = defaultdict(int)
     train_gen_bow = defaultdict(int)
     train_wri_bow = defaultdict(int)
-    test_gen_bow = defaultdict(int)
-    test_wri_bow = defaultdict(int)
     cond_gen = defaultdict(int)
     cond_wri = defaultdict(int)
     tgc=twc=tp=fp=tn=fn=0
@@ -46,28 +44,35 @@ def from_scratch(data):
         cond_wri[w] = ((train_wri_bow[w] + 1) / (twc + len(vocab)))
 
     for doc in test_data_generated:
+        prob_gen = math.log(prior_gen)
+        prob_wri = math.log(prior_wri)
         for w in doc:
-            prob_gen = prior_gen
-            prob_wri = prior_wri
-            prob_gen += math.log(cond_gen[w])
-            prob_wri += math.log(cond_wri[w])
+            if w in cond_gen:
+                prob_gen += math.log(cond_gen[w])
+            if w in cond_wri:
+                prob_wri += math.log(cond_wri[w])
         if prob_gen>=prob_wri:
             tp+=1
         else:
             fn+=1
 
     for doc in test_data_written:
+        prob_gen = math.log(prior_gen)
+        prob_wri = math.log(prior_wri)
         for w in doc:
-            prob_gen = prior_gen
-            prob_wri = prior_wri
-            prob_gen += math.log(cond_gen[w])
-            prob_wri += math.log(cond_wri[w])
+            if w in cond_gen:
+                prob_gen += math.log(cond_gen[w])
+            if w in cond_wri:
+                prob_wri += math.log(cond_wri[w])
         if prob_wri>=prob_gen:
             tn+=1
         else:
             fp+=1
 
     print(tp, fp, fn, tn)
+
+    acc = (tp+tn)/(tp+fp+fn+tn)
+    print(acc)
 
 
 data = read_data.read_csv()
