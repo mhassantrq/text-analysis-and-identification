@@ -1,6 +1,9 @@
 import read_data, preprocessing
 from collections import defaultdict
 import math
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.model_selection import train_test_split
 
 def from_scratch(data):
     train_data_generated, train_data_written, test_data_generated, test_data_written = preprocessing.split_train_test(data)
@@ -74,8 +77,23 @@ def from_scratch(data):
     acc = (tp+tn)/(tp+fp+fn+tn)
     print(acc)
 
+def from_sklearn(data):
+    train_X, test_X, train_y, test_y = train_test_split(data.text, data.label, test_size=0.2)
+
+    vectrizer = CountVectorizer()
+    train_c = vectrizer.fit_transform(train_X)
+    test_c = vectrizer.transform(test_X)
+
+    nb = MultinomialNB()
+    nb.fit(train_c, train_y)
+
+    score = nb.score(test_c, test_y)
+    print(score)
+
 
 data = read_data.read_csv()
-from_scratch(data)
+#from_scratch(data)
+from_sklearn(data)
 
-# to remove puntuation pending
+
+# remove puntuation pending
