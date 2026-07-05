@@ -32,8 +32,6 @@ def lower_case(data):
 
 def split_features(data):
     # will act as a basic tokenizer
-    for i in range(len(data)):
-        data.iloc[i] = data.iloc[i].split()
-    return data
+    return data.str.split()
 
 
