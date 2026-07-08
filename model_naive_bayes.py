@@ -86,15 +86,15 @@ def from_sklearn(data):
     nb = MultinomialNB()
     nb.fit(train_c, train_y)
 
-    joblib.dump(nb, 'models/nb.pkl')
-    joblib.dump(vectrizer, 'models/nb_vectorizer.pkl')
+    # joblib.dump(nb, 'models/nb.pkl')
+    # joblib.dump(vectrizer, 'models/nb_vectorizer.pkl')
     score = nb.score(test_c, test_y)
     print(score)
 
 
 data = read_data.read_csv()
 #from_scratch(data)
-from_sklearn(data)
+#from_sklearn(data)
 
 
 # remove puntuation pending
