@@ -1,7 +1,8 @@
-Lets explore ways to analyze and identify text.
-And find out if a piece of text was written by someone or generated.
+lets explore ways to analyze and identify text.
+and find out if a piece of text was written by someone or generated.
 
-Classifying the text into written and generated categories.
+classifying the text into written and generated categories.
+using Flask to display text box, get input and show result
 
 -   Preprocessing
     -   split the data into training and testing
@@ -14,3 +15,5 @@ Classifying the text into written and generated categories.
 -   Model Naive Bayes
     -   from scratch
     -   from sklearn
+
+-   SVM
