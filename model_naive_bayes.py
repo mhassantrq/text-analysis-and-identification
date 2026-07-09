@@ -92,7 +92,7 @@ def from_sklearn(data):
     print(score)
 
 
-data = read_data.read_csv()
+#data = read_data.read_csv()
 #from_scratch(data)
 #from_sklearn(data)
 
