@@ -4,7 +4,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
 import joblib
 
-def from_sklearn(data):
+def naive_bayes(data):
     train_X, test_X, train_y, test_y = train_test_split(data.text, data.label, test_size=0.1)
 
     vectrizer = CountVectorizer()
@@ -21,5 +21,5 @@ def from_sklearn(data):
 
 
 data = read_data.read_csv()
-from_sklearn(data)
+naive_bayes(data)
 
