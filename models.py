@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 import joblib
 
 def naive_bayes(data):
-    train_X, test_X, train_y, test_y = train_test_split(data.text, data.label, test_size=0.1)
+    train_X, test_X, train_y, test_y = train_test_split(data.text, data.label, test_size=0.2)
 
     vectrizer = CountVectorizer()
     train_c = vectrizer.fit_transform(train_X)
@@ -20,6 +20,6 @@ def naive_bayes(data):
     print(score)
 
 
-data = read_data.read_csv()
+data = read_data.read_data_merged()
 naive_bayes(data)
 
