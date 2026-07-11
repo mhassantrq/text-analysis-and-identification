@@ -31,6 +31,9 @@ def svm(data):
     svm = LinearSVC()
     svm.fit(train_X_vect, train_y)
 
+    # joblib.dump(svm, 'models/svm.pkl')
+    # joblib.dump(tfidf, 'models/tfidf_vectorizer.pkl')
+
     pred_y = svm.predict(test_X_vect)
 
     acc = accuracy_score(test_y, pred_y)
