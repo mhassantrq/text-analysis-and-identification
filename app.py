@@ -7,7 +7,7 @@ app = Flask(__name__, template_folder='templates')
 nb_model = joblib.load('models/nb.pkl')
 count_vec = joblib.load('models/count_vectorizer.pkl')
 svm_model = joblib.load('models/svm.pkl')
-tfidf_vec = joblib.load('models/tfidf_vectorizer.pkl')
+tfidf_vec = joblib.load('models/svm_tfidf_vectorizer.pkl')
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
