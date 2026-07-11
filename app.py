@@ -19,15 +19,19 @@ def index():
             text = file.read().decode('utf-8')
         else:
             text = request.form['text']
-        vec = count_vec.transform([text])
-        prb = nb_model.predict_proba(vec)[0]
-        pred = nb_model.predict(vec)[0]
-
+        #vec = count_vec.transform([text])
+        vec = tfidf_vec.transform([text])
+#        prb = nb_model.predict_proba(vec)[0]
+        pred = svm_model.predict(vec)[0]
         predictions = {
-            'pred' : pred,
-            'written' : prb[0],
-            'generated' : prb[1],
+            'pred': pred
         }
+
+        # predictions = {
+        #     'pred' : pred,
+        #     'written' : prb[0],
+        #     'generated' : prb[1],
+        # }
 
     return render_template('index.html', predictions=predictions)
 
@@ -36,7 +40,7 @@ def about():
     return render_template('about.html')
 
 @app.route('/graphs/')
-def about():
+def graphs():
     return render_template('graphs.html')
 
 
