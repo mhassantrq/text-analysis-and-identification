@@ -1,8 +1,10 @@
 import read_data
 from sklearn.naive_bayes import MultinomialNB
-from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.model_selection import train_test_split
 import joblib
+from sklearn.svm import LinearSVC
+from sklearn.metrics import accuracy_score
 
 def naive_bayes(data):
     train_X, test_X, train_y, test_y = train_test_split(data.text, data.label, test_size=0.2)
@@ -19,7 +21,22 @@ def naive_bayes(data):
     score = nb.score(test_c, test_y)
     print(score)
 
+def svm(data):
+    train_X, test_X, train_y, test_y = train_test_split(data.text, data.label, test_size=0.2)
+    tfidf = TfidfVectorizer()
+
+    train_X_vect = tfidf.fit_transform(train_X)
+    test_X_vect = tfidf.transform(test_X)
+
+    svm = LinearSVC()
+    svm.fit(train_X_vect, train_y)
+
+    pred_y = svm.predict(test_X_vect)
+
+    acc = accuracy_score(test_y, pred_y)
+
+    print(acc)
 
 data = read_data.read_data_merged()
-naive_bayes(data)
-
+#naive_bayes(data)
+svm(data)
