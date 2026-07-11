@@ -18,7 +18,7 @@ def naive_bayes(data):
 
     # joblib.dump(nb, 'models/nb.pkl')
     # joblib.dump(vectrizer, 'models/count_vectorizer.pkl')
-    # score = nb.score(test_c, test_y)
+    score = nb.score(test_c, test_y)
     print(score)
 
 def svm(data):
