@@ -4,16 +4,20 @@ and find out if a piece of text was written by someone or generated.
 classifying the text into written and generated categories.
 using Flask to display text box, get input and show result
 
+the dataset was run on naive bayes. with bag of words done by count vectorizer from sklearn. the model achieve accuracy of 0.946 after a split of 0.2 test size.
+
+the functionality of uploading a text file was added for detection purpose along with the already given text area.
+
 -   preprocessing
-    -   split the data into training and testing
-    -   lowercasing the text
-    -   tokenizing the text
+    split the data into training and testing
+    lowercasing the text
+    tokenizing the text
 
 -   read data
-    -   reading csv data
+    reading csv data
 
 -   models
-    -   naive bayes
+    naive bayes
 
 -   graphs
-
+s
