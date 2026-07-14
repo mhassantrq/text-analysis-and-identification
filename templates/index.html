@@ -20,8 +20,24 @@
         {% endif %}
 
         {% if top_words.gen_top and top_words.wri_top %}
-            <p><h3>most important words in generated documents</h1>{{top_words.gen_top}}</p>
-            <p><h3>most important words in written documents</h3>{{top_words.wri_top}}</p>
+        <table>
+            <tr>
+            <th>generated top words</th>
+            <th>written top words</th>
+            </tr>
+            <tr>
+                <td>
+                    {% for word, weight in top_words.gen_top.items() %}
+                        <p>{{word}}{{weight}}</p>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for word, weight in top_words.wri_top.items() %}
+                        <p>{{word}}{{weight}}</p>
+                    {% endfor %}
+                </td>
+            </tr>
+        </table>
         {% endif %}
     </body>
 </html>

@@ -44,7 +44,6 @@ def index():
             predictions = {
                 'pred': pred
             }
-
     return render_template('index.html', predictions=predictions, top_words=top_words)
 
 @app.route('/about/')
