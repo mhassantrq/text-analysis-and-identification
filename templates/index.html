@@ -18,5 +18,10 @@
             <p>written score: {{predictions.written}}, generated score: {{predictions.generated}}</p>
             {% endif %}
         {% endif %}
+
+        {% if top_words.gen_top and top_words.wri_top %}
+            <p><h3>most important words in generated documents</h1>{{top_words.gen_top}}</p>
+            <p><h3>most important words in written documents</h3>{{top_words.wri_top}}</p>
+        {% endif %}
     </body>
 </html>

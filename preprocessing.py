@@ -42,15 +42,15 @@ def top_words_svm(model, vect, count):
     gen_index = np.argsort(weights)[-count:]
     wri_index = np.argsort(weights)[:count]
 
+    gen_top = {}
+    wri_top= {}
+
     print('generated')
     for i in gen_index:
-        print(feature_names[i], weights[i])
+        gen_top[feature_names[i]] = weights[i]
 
     print('written')
     for i in wri_index:
-        print(feature_names[i], weights[i])
+        wri_top[feature_names[i]] = weights[i]
 
-svm_model = joblib.load('models/svm.pkl')
-tfidf_vec = joblib.load('models/svm_tfidf_vectorizer.pkl')
-
-top_words_svm(svm_model, tfidf_vec, 10)
+    return gen_top, wri_top

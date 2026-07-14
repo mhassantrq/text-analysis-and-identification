@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 import joblib
+import preprocessing
 
 
 app = Flask(__name__, template_folder='templates')
@@ -13,6 +14,11 @@ tfidf_vec = joblib.load('models/svm_tfidf_vectorizer.pkl')
 def index():
     predictions = None
     file = request.files.get('file')
+    gen_top, wri_top = preprocessing.top_words_svm(svm_model, tfidf_vec, 20)
+    top_words = {
+        'gen_top' : gen_top,
+        'wri_top' : wri_top,
+    }
     if request.method == 'POST':
 
         model_type = request.form.get('model')
@@ -39,7 +45,7 @@ def index():
                 'pred': pred
             }
 
-    return render_template('index.html', predictions=predictions)
+    return render_template('index.html', predictions=predictions, top_words=top_words)
 
 @app.route('/about/')
 def about():
