@@ -1,3 +1,6 @@
+import joblib
+import numpy as np
+
 def split_train_test(data, train_size=0.8):
     generated_rows = data[data['label'] == 1]
     written_rows = data[data['label'] == 0]
@@ -30,3 +33,24 @@ def lower_case(data):
 
 def split_features(data):
     return data.str.split()
+
+def top_words_svm(model, vect, count):
+    feature_names = vect.get_feature_names_out()
+
+    weights = model.coef_[0]
+
+    gen_index = np.argsort(weights)[-count:]
+    wri_index = np.argsort(weights)[:count]
+
+    print('generated')
+    for i in gen_index:
+        print(feature_names[i], weights[i])
+
+    print('written')
+    for i in wri_index:
+        print(feature_names[i], weights[i])
+
+svm_model = joblib.load('models/svm.pkl')
+tfidf_vec = joblib.load('models/svm_tfidf_vectorizer.pkl')
+
+top_words_svm(svm_model, tfidf_vec, 10)
