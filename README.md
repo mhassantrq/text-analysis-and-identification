@@ -12,3 +12,5 @@
     the dataset is run on svm. with term frequency and inverse document frequency done by from sklearn. the model achieve accuracy of 0.96 after a split of 0.2 test size.
 
     the functionality of uploading a text file was added for detection purpose along with the already given text area.
+
+    global explainability by displaying top 20 words choosen from both written and generated text.
