@@ -8,12 +8,15 @@
             <textarea name="text" rows="12" cols="100" placeholder="enter your text..."></textarea>            
             <br><br>
             <input type="file" name="file">
-            <button type="submit"> Analyze </button>
+            <button type="submit" name="model" value="nb"> naive bayes </button>
+            <button type="submit" name="model" value="svm"> svm </button>
         </form>
 
         {% if predictions %}
             <p>{{predictions.pred}}</p>
+            {% if predictions.written and predictions.generated %}
             <p>written score: {{predictions.written}}, generated score: {{predictions.generated}}</p>
+            {% endif %}
         {% endif %}
     </body>
 </html>

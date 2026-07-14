@@ -13,25 +13,31 @@ tfidf_vec = joblib.load('models/svm_tfidf_vectorizer.pkl')
 def index():
     predictions = None
     file = request.files.get('file')
-    
     if request.method == 'POST':
+
+        model_type = request.form.get('model')
+
         if file and file.name.endswith('.txt'):
             text = file.read().decode('utf-8')
         else:
             text = request.form['text']
-        #vec = count_vec.transform([text])
-        vec = tfidf_vec.transform([text])
-#        prb = nb_model.predict_proba(vec)[0]
-        pred = svm_model.predict(vec)[0]
-        predictions = {
-            'pred': pred
-        }
 
-        # predictions = {
-        #     'pred' : pred,
-        #     'written' : prb[0],
-        #     'generated' : prb[1],
-        # }
+        if model_type == 'nb':
+            vec = count_vec.transform([text])
+            pred = nb_model.predict(vec)[0]
+            prb = nb_model.predict_proba(vec)[0]
+            predictions = {
+                'pred' : pred,
+                'written' : prb[0],
+                'generated' : prb[1],
+            }
+        
+        elif model_type == 'svm':
+            vec = tfidf_vec.transform([text])
+            pred = svm_model.predict(vec)[0]
+            predictions = {
+                'pred': pred
+            }
 
     return render_template('index.html', predictions=predictions)
 
