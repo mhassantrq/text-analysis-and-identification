@@ -19,6 +19,13 @@
             {% endif %}
         {% endif %}
 
+        {% if contributions %}
+            {% for w in contributions %}
+                <p>{{w['word']}}: {{w['contr']}}</p>
+            {% endfor %}
+        {% endif %}
+
+
         {% if top_words.gen_top and top_words.wri_top %}
         <table>
             <tr>
