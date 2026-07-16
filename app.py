@@ -19,6 +19,8 @@ def index():
         'gen_top' : gen_top,
         'wri_top' : wri_top,
     }
+    contributions=[]
+
     if request.method == 'POST':
 
         model_type = request.form.get('model')
@@ -44,7 +46,8 @@ def index():
             predictions = {
                 'pred': pred
             }
-    return render_template('index.html', predictions=predictions, top_words=top_words)
+            contributions = preprocessing.words_contribution_svm(svm_model, tfidf_vec, text)
+    return render_template('index.html', predictions=predictions, top_words=top_words, contributions=contributions)
 
 @app.route('/about/')
 def about():
