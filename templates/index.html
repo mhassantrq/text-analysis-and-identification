@@ -20,15 +20,16 @@
         {% endif %}
 
         {% if contributions %}
-            {% for w in contributions %}
-                {% if w['contr'] > 0 %}
-                    <p style="color: green;">{{w['word']}}</p>
-                {% else %}
-                    <p style="color: red;">{{w['word']}}</p>
-                {% endif %}
-            {% endfor %}
-
-
+            <p>
+                {% for w in contributions %}
+                        {% if w['contr'] > 0 %}
+                            <span style="color: red;">{{w['word']}}</span>
+                        {% else %}
+                            <span style="color: green;">{{w['word']}}</span>
+                        {% endif %}
+                {% endfor %}
+            </p>
+            green color shows the word was has more chances of being written, while the red color shows the word might be generated.
         {% endif %}
 
 
