@@ -21,8 +21,14 @@
 
         {% if contributions %}
             {% for w in contributions %}
-                <p>{{w['word']}}: {{w['contr']}}</p>
+                {% if w['contr'] > 0 %}
+                    <p style="color: green;">{{w['word']}}</p>
+                {% else %}
+                    <p style="color: red;">{{w['word']}}</p>
+                {% endif %}
             {% endfor %}
+
+
         {% endif %}
 
 
