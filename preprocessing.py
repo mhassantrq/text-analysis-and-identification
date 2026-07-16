@@ -35,7 +35,7 @@ def split_features(data):
     return data.str.split()
 
 def top_words_svm(model, vect, count):
-    feature_names = vect.get_feature_names_out()
+    words = vect.get_feature_names_out()
 
     weights = model.coef_[0]
 
@@ -47,10 +47,31 @@ def top_words_svm(model, vect, count):
 
     print('generated')
     for i in gen_index:
-        gen_top[feature_names[i]] = weights[i]
+        gen_top[words[i]] = weights[i]
 
     print('written')
     for i in wri_index:
-        wri_top[feature_names[i]] = weights[i]
+        wri_top[words[i]] = weights[i]
 
     return gen_top, wri_top
+
+def words_contribution_svm(model, vect, text):
+    text_vec = vect.transform([text])
+    words = vect.get_feature_names_out()
+    weights = model.coef_[0]
+
+    wrds_contr = []
+    wrds_pos = text_vec.nonzero()[1]
+
+    for i in wrds_pos:
+        wrds_contr.append({
+            'word': words[i],
+            'tfidf': text_vec[0, i],
+            'weight': weights[i],
+            'contr': text_vec[0,i] * weights[i],
+        })
+
+    wrds_contr.sort(key= lambda x: x['contr'])
+
+    return wrds_contr
+
