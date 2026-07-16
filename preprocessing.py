@@ -59,19 +59,20 @@ def words_contribution_svm(model, vect, text):
     text_vec = vect.transform([text])
     words = vect.get_feature_names_out()
     weights = model.coef_[0]
+    anlzyer = vect.build_analyzer()
+    text_tokens = anlzyer(text)
+    vocab = vect.vocabulary_
 
     wrds_contr = []
-    wrds_pos = text_vec.nonzero()[1]
 
-    for i in wrds_pos:
+    for w in text_tokens:
+        i = vocab[w]
         wrds_contr.append({
             'word': words[i],
             'tfidf': text_vec[0, i],
             'weight': weights[i],
             'contr': text_vec[0,i] * weights[i],
         })
-
-    wrds_contr.sort(key= lambda x: x['contr'])
 
     return wrds_contr
 
